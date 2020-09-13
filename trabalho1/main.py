@@ -76,18 +76,23 @@ def mutate(population):
         if(chance < 0.2):
             #se o numero for menor que 0.2, nesse caso, vai ocorrer mutacao
             
-            #idx1 vai ser um numero entre 0 e 10
+            #idx1 vai ser um numero entre 1 e 10 (as posicoes no genoma)
             idx1 = random.randrange(1,10)
             idx2 = idx1
 
             while idx2 == idx1: 
+                #idx2 vai ser numero entre 1 e 10, diferente de idx1
                 idx2 = random.randrange(1,10)
-
+                
+                
+            #swapa os 2
             i.genome[idx1], i.genome[idx2] = i.genome[idx2], i.genome[idx1]
             i.total_distance = i.calculate_total_distance(i.genome)        
 
 def main():
-
+    
+    #cria populacao
+    #ordena os individuos por distancia
     population = createPopulation()
     population.sort(key=sortDist)    
 
@@ -96,14 +101,21 @@ def main():
     i = 0
     while i < 10 :
         print("========================= GENERATION ", i, "=========================")
+        
+        #cria uma geracao de filhos
         new_gen = crossover(population)
+        #muta geracao filhos
         mutate(new_gen)
         
         # print_pop(new_gen)
-
+        
+        #descarta os piores sem piedade
         discard_worst(population)
-
+        
+        #junta a populacao dos melhores pais com os novos filhos
         population = population + new_gen
+        
+        #ordena
         population.sort(key=sortDist)
 
         print("Results")
