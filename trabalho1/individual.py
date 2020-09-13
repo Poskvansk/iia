@@ -11,6 +11,8 @@ import random
 # 8 - PoA
 # 9 - BsB
 
+#matriz distancia, igual PDF
+
 dist_matrix = [ [0, 17, 3, 35, 43, 26, 44, 5, 8, 9],
                 [0, 0, 20, 31, 47, 11, 51, 22, 8, 23],
                 [0, 0, 0, 38, 45, 29, 45, 3, 11, 9],
@@ -34,14 +36,20 @@ class Individual:
     def calculate_total_distance(self, genome):
         
         total_distance = 0
-
+        
+         #calcula a distancia de gnome[i] + genome[i+1]
+        
         for i in range(0, len(genome)-1):
             total_distance = total_distance + self.calculate_distance(genome[i], genome[i+1])
         return total_distance
 
     def __init__(self):
+      
+        #gera vetor aleatorio, primeiro e ultimo elementos sempre = 9  (codigo de BsB)
 
         self.genome = [9] + random.sample(range(0,9), 9) + [9]
+        
+        #calcula a distancia total do caminho
         self.total_distance = self.calculate_total_distance(self.genome)
 
 
