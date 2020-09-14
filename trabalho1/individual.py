@@ -27,7 +27,6 @@ dist_matrix = [ [0, 17, 3, 35, 43, 26, 44, 5, 8, 9],
 
 class Individual:
 
-
     def calculate_distance(self, i, j):
         if(j < i):
             i, j = j, i
@@ -43,14 +42,13 @@ class Individual:
             total_distance = total_distance + self.calculate_distance(genome[i], genome[i+1])
         return total_distance
 
-    def __init__(self):
+    def __init__(self, genome = None):
       
+        self.genome = genome
+        
         #gera vetor aleatorio, primeiro e ultimo elementos sempre = 9  (codigo de BsB)
-
-        self.genome = [9] + random.sample(range(0,9), 9) + [9]
+        if self.genome is None:
+            self.genome = [9] + random.sample(range(0,9), 9) + [9]
         
         #calcula a distancia total do caminho
         self.total_distance = self.calculate_total_distance(self.genome)
-
-
-
