@@ -28,13 +28,19 @@ def crossover(population):
     
     #cruza os individuos da população
     #individuo[i] cruza com individuo[i+1]
-    #individuo[i+1] NAO cruza com individuo [i+2]
     for i in range(0, len(population)-2):
-            aux = cross(population[i], population[i+1])
-            sons.append(aux)
+        j = 1
+
+        #evita a reprodução entre dois individuos com mesmo genoma (que resultaria em mais um clone)
+        #se individuo[i] tem mesmo genoma que individuo[i+1], indivudo[i] cruzara com individuo[i+j], 1 < j, ate que sejam diferentes
+        while(population[i].genome == population[i+j].genome) and (population[i+j] != population[-1]):
+            j+=1
+
+        aux = cross(population[i], population[i+j])
+        sons.append(aux)
 
     return sons
-    
+     
 ########################################################################################################
 # def crossover(population):
     

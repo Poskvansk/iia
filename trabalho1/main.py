@@ -10,32 +10,31 @@ def createPopulation():
         population.append(aux)
     return population
 
+#ordena populacao usando a distancia total como parametro
 def sortDist(val):
-    #ordena populacao usando a distancia total como parametro
     return val.total_distance
  
+#printa a populacao atual
+#[genoma] -> distancia total
 def print_pop(population):
-    #printa a populacao atual
-    #[genoma] -> distancia total
     for i in range(0, len(population)):
         print(population[i].genome, "->", population[i].total_distance)
 
 def print_best(population):
-    for i in range(0, 2):
+    for i in range(0, 5):
         print(population[i].genome, "->", population[i].total_distance)
 
+#discarda N/2 os piores individuos da população
+#os 50% mais lentos vao ser descartados sem piedade
 def discard_worst(population):
     i = len(population) - 1
-    #discarda N/2 os piores individuos da população
-    #os 50% mais lentos vao ser descartados sem piedade
     while i > len(population)/2 :
         population.pop()
         i -= 1
 
-def main():
-    
-    #cria populacao
-    #ordena os individuos por distancia
+#cria populacao
+#ordena os individuos por distancia
+def main():    
     population = createPopulation()
     population.sort(key=sortDist)    
 
@@ -51,7 +50,10 @@ def main():
         #muta geracao filhos
         mutate(new_gen)
         
+        # print("--------------------------------")
+        # print("new gen")
         # print_pop(new_gen)
+        # print("--------------------------------")
         
         #descarta os piores sem piedade
         discard_worst(population)
@@ -62,9 +64,9 @@ def main():
         #ordena
         population.sort(key=sortDist)
 
-        print("Population size = ", len(population))
+        # print("Population size = ", len(population))
         # print_pop(population)
-        print("Now the best are:  ")
+        print("TOP 5:")
         print_best(population)
         i+=1
 
