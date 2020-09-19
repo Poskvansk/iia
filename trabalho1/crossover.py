@@ -1,6 +1,5 @@
 from individual import *
 
-
 def cross(p1, p2):
 
     aux = []
@@ -88,25 +87,3 @@ def crossover2(population):
         sons.append(aux)
 
     return sons
-########################################################################################################
-# def crossover(population):
-
-#     sons = []
-
-#     #cruza os individuos da população
-#     #individuo[i] cruza com individuo[i+1]
-#     #individuo[i+1] NAO cruza com individuo [i+2]
-#     for i in range(0, len(population)):
-#         if(i % 2 == 0) and (population[i] != population[-1]):
-#             #for anda de 2 em 2
-#             aux = cross(population[i], population[i+1])
-#             sons.append(aux)
-
-#     for i in range(0, len(population)):
-#         if(i % 2 == 0) and (population[i] != population[-1]):
-#             #for anda de 2 em 2
-#             aux = cross(population[i+1], population[i])
-#             sons.append(aux)
-#     return sons
-
-########################################################################################################
