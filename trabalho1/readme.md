@@ -1,6 +1,6 @@
 # Trabalho 1 de IIA
 ## Alunos
-Gabriel Oliveira do Espirito Santo - 18/0041835 \\
+Gabriel Oliveira do Espirito Santo - 18/0041835
 Luis Filipe Siqueira Ribeiro - 18/0053906
 
 ## Como compilar
