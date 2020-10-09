@@ -42,7 +42,7 @@ def getStatusPaciente(paciente):
     #     #  paciente.manchas = 1
     # paciente.manchas_freq = int(input("A partir de quantos dias observou-se as manchas? "))
 
-    # paciente.dor_musc_freq = int(input("De 0 a 10, quão alta é a frequencia da dor muscular? "))
+    paciente.dor_musc_freq = int(input("De 0 a 10, quão alta é a frequencia da dor muscular? "))
     
     # paciente.dor_art_freq = int(input("De 0 a 10, quão alta é a frequencia da dor articular? "))
     # paciente.dor_art_intd = int(input("De 0 a 10, quão alta é a intensidade da dor articular? "))
@@ -87,22 +87,22 @@ def main():
     dias_febre = ctrl.Antecedent(np.arange(0, 8, 1), 'dias_febre')
 
     # manchas = 
-    mancha_freq = ctrl.Antecedent(np.arange(0,8), 'dia aparicao mancha')
+    # mancha_freq = ctrl.Antecedent(np.arange(0,8), 'dia aparicao mancha')
 
-    dor_musc_freq = ctrl.Antecedent(np.arange(0,11), 'Frequencia dor musc')
+    dor_musc_freq = ctrl.Antecedent(np.arange(0,11), 'dor_musc_freq')
 
-    dor_art_freq = ctrl.Antecedent(np.arange(0, 11), 'Freq. dor artic.')
-    dor_art_intensidade = ctrl.Antecedent(np.arange(0, 11), 'Intensidade dor artic.')
+    # dor_art_freq = ctrl.Antecedent(np.arange(0, 11), 'Freq. dor artic.')
+    # dor_art_intensidade = ctrl.Antecedent(np.arange(0, 11), 'Intensidade dor artic.')
 
-    # edema_art = 0
-    edema_art_intd = ctrl.Antecedent(np.arange(0, 11), 'Intensdd. edema')
+    # # edema_art = 0
+    # edema_art_intd = ctrl.Antecedent(np.arange(0, 11), 'Intensdd. edema')
 
-    # conjuntivite = ctrl.Antecedent(np.arange(0,2), 'conjuntivite')
+    # # conjuntivite = ctrl.Antecedent(np.arange(0,2), 'conjuntivite')
 
-    # dor_cabeca_freq = 0
-    dor_cabeca_intd = ctrl.Antecedent(np.arange(0, 11), 'Intendd. dor cabeça')
+    # # dor_cabeca_freq = 0
+    # dor_cabeca_intd = ctrl.Antecedent(np.arange(0, 11), 'Intendd. dor cabeça')
 
-    coceira = ctrl.Antecedent(np.arange(0, 11), 'Intdd coceira')
+    # coceira = ctrl.Antecedent(np.arange(0, 11), 'Intdd coceira')
 
     # hiptrof_gangli_freq = 0
     # disc_hemo = 0
@@ -114,25 +114,28 @@ def main():
     febre.automf(3)
     # dias_febre.automf(3)
     dias_febre['curta'] = fuzz.trimf(dias_febre.universe, [0, 0, 3])
-    dias_febre['media'] = fuzz.trimf(dias_febre.universe, [2, 4, 6])
-    dias_febre['longa'] = fuzz.trimf(dias_febre.universe, [5, 7, 7])
+    dias_febre['media'] = fuzz.trimf(dias_febre.universe, [2, 3, 5])
+    dias_febre['longa'] = fuzz.trimf(dias_febre.universe, [4, 7, 7])
     # dias_febre.view()
     # input("a")
 
-    # manch.automf(3) 0
-    mancha_freq.automf(3)
+    # # mancha.automf(3) 0
+    # mancha_freq.automf(3)
+
     dor_musc_freq.automf(3)
-    dor_art_freq.automf(3)
-    dor_art_intensidade.automf(3)
-    # edema_art.automf(3)
-    edema_art_intd.automf(3)
-    # conjuntivite.automf(3)
-    # dor_cabeca_freq.automf(3)
-    dor_cabeca_intd.automf(3)
-    coceira.automf(3)
-    # hiptrof_gangli_freq.automf(3)
-    # disc_hemo.automf(3)
-    # acomet_neuro.automf(3)
+
+    # dor_art_freq.automf(3)
+    # dor_art_intensidade.automf(3)
+
+    # # edema_art.automf(3)
+    # edema_art_intd.automf(3)
+    # # conjuntivite.automf(3)
+    # # dor_cabeca_freq.automf(3)
+    # dor_cabeca_intd.automf(3)
+    # coceira.automf(3)
+    # # hiptrof_gangli_freq.automf(3)
+    # # disc_hemo.automf(3)
+    # # acomet_neuro.automf(3)
 
     ################################################
     dengue = ctrl.Consequent(np.arange(0, 1.1, 0.1), 'dengue')
@@ -151,30 +154,36 @@ def main():
     chikungunya['alta'] = fuzz.trimf(dengue.universe, [0.5, 1.0, 1.0])
     ################################################
 
-    rule1 = ctrl.Rule(febre['good'] & dias_febre['longa'], dengue['alta'])
-    rule2 = ctrl.Rule(febre['poor'], dengue['baixa'])
-    rule3 = ctrl.Rule(febre['average'], dengue['media'])
+    rule1 = ctrl.Rule(febre['good'] & dias_febre['longa'], consequent=(dengue['alta'], zika['baixa'], chikungunya['baixa']))
+    rule11 = ctrl.Rule(febre['good'] & dias_febre['media'], consequent = (dengue['alta'], zika['baixa'], chikungunya['alta']))
+    rule111 = ctrl.Rule(febre['good'] & dias_febre['curta'], consequent = (dengue['baixa'], zika['baixa'], chikungunya['alta']))
 
-    # rule4 = ctrl.Rule(dias_febre['longa'], dengue['alta'])
-    rule5 = ctrl.Rule(dias_febre['curta'], dengue['baixa'])
-    rule6 = ctrl.Rule(dias_febre['media'], dengue['media'])
+    rule2 = ctrl.Rule(febre['poor'] | dias_febre['curta'], consequent = (dengue['baixa'], zika['alta'], chikungunya['baixa'] ))
+    rule22 = ctrl.Rule(febre['poor'] & dias_febre['media'], consequent = (dengue['baixa'], zika['alta'], chikungunya['baixa']))
+    rule222 = ctrl.Rule(febre['poor'] & dias_febre['longa'], consequent = (dengue['baixa'], zika['media'], chikungunya['baixa']))
 
-    dengue_ctrl = ctrl.ControlSystem([rule1,rule2, rule3, rule5, rule6])
-    dengue_result = ctrl.ControlSystemSimulation(dengue_ctrl)
+    rule3 = ctrl.Rule(febre['average'] & dias_febre['longa'], consequent = (dengue['alta'], zika['media'], chikungunya['baixa']))
+    rule33 = ctrl.Rule(febre['average'] & dias_febre['media'], consequent = (dengue['media'], zika['media'], chikungunya['baixa']))
+    rule333 = ctrl.Rule(febre['average'] & dias_febre['curta'], consequent = (dengue['baixa'], zika['alta'], chikungunya['baixa']))
 
-    dengue_result.input['febre'] = p1.temp_corpo
-    dengue_result.input['dias_febre'] = p1.dias_febre
-    dengue_result.compute()
+    # rule_dm = ctrl.Rule(dor_musc_freq['good'])
 
+    diag_ctrl = ctrl.ControlSystem([rule1, rule11, rule111, rule2, rule22, rule222,
+                                     rule3, rule33, rule333])
+    diag_result = ctrl.ControlSystemSimulation(diag_ctrl)
 
-    print(dengue_result.output['dengue'])
-    dengue.view(sim=dengue_result)
+    diag_result.input['febre'] = p1.temp_corpo
+    diag_result.input['dias_febre'] = p1.dias_febre
 
-    # zika_ctrl = ctrl.ControlSystem()
-    # zika = ctrl.ControlSystemSimulation(zika_ctrl)
-# 
-    # chikungunya_ctrl = ctrl.ControlSystem()
-    # chikungunya = ctrl.ControlSystemSimulation(chikungunya_ctrl)
-    input("Enter")
+    diag_result.compute()
+
+    print("dengue = ", round(diag_result.output['dengue'], 2) )
+    print("zika = ", round(diag_result.output['zika'],2) )
+    print("chico = ", round(diag_result.output['chikungunya'],2) )
+
+    # dengue.view(sim=diag_result)
+    # zika.view(sim=diag_result)
+    # chikungunya.view(sim=diag_result)
+    # input("Enter")
 
 main()
