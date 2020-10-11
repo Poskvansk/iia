@@ -20,8 +20,8 @@ def main():
     dias_febre = ctrl.Antecedent(np.arange(0, 8, 1), 'dias_febre')
 
     #########
-
-    # mancha_freq = ctrl.Antecedent(np.arange(0,8), 'dia aparicao mancha')
+    mancha = ctrl.Antecedent(np.arange(0,3), 'mancha')
+    dia_mancha = ctrl.Antecedent(np.arange(0,8), 'dia_mancha')
 
     #########
 
@@ -43,7 +43,8 @@ def main():
 
     #########
 
-    # dor_cabeca_intd = ctrl.Antecedent(np.arange(0, 11), 'dor_cabeca_int')
+    dor_cabeca_freq = ctrl.Antecedent(np.arange(0,11), 'dor_cabeca_freq')
+    dor_cabeca_intd = ctrl.Antecedent(np.arange(0, 11), 'dor_cabeca_intd')
 
     #########
 
@@ -71,8 +72,12 @@ def main():
 
     ############################################### 
 
-    # # mancha.automf(3) 0
-    # mancha_freq.automf(3)
+    mancha['nao'] = fuzz.trimf(mancha.universe, [0,0,1])
+    mancha['sim'] = fuzz.trimf(mancha.universe, [1,2,2])
+
+    dia_mancha['cedo'] = fuzz.trimf(dia_mancha.universe, [0, 0, 3])
+    dia_mancha['normal'] = fuzz.trimf(dia_mancha.universe, [2, 3, 5])
+    dia_mancha['tarde'] = fuzz.trimf(dia_mancha.universe, [4, 7, 7])
 
     ###############################################
 
@@ -92,8 +97,8 @@ def main():
 
     ###############################################
 
-    # # dor_cabeca_freq.automf(3)
-    # dor_cabeca_intd.automf(3)
+    dor_cabeca_freq.automf(3)
+    dor_cabeca_intd.automf(3)
 
     ############################################### okokok
 
@@ -158,9 +163,10 @@ def main():
     
     ###############################################
 
-    rule_manchas1 = ctrl.Rule()
-    rule_manchas2 = ctrl.Rule()
-    rule_manchas3 = ctrl.Rule()
+    rule_manchas1 = ctrl.Rule(mancha['nao'], zika['baixa'])
+    rule_manchas2 = ctrl.Rule(mancha['sim'] | dia_mancha['cedo'], consequent=(dengue['baixa'], zika['alta'], chikungunya['media']))
+    rule_manchas3 = ctrl.Rule(mancha['sim'] | dia_mancha['normal'], consequent=(dengue['media'], zika['media'], chikungunya['media']))
+    rule_manchas4 = ctrl.Rule(mancha['sim'] | dia_mancha['tarde'], consequent=(dengue['alta'], zika['baixa'], chikungunya['media']))
 
     ###############################################
 
@@ -193,11 +199,11 @@ def main():
 
     ###############################################
 
-    # rule cabeca
-    rule_cabeca1 = ctrl.Rule()
-    rule_cabeca2 = ctrl.Rule()
-    rule_cabeca3 = ctrl.Rule()
+    rule_cabeca1 = ctrl.Rule(dor_cabeca_freq['good'] & dor_cabeca_intd['good'], consequent=(dengue['alta'], zika['media'], chikungunya['baixa']))
+    rule_cabeca2 = ctrl.Rule(dor_cabeca_freq['average'] | dor_cabeca_intd['average'], consequent=(dengue['media'], zika['alta'], chikungunya['alta']))
+    rule_cabeca3 = ctrl.Rule(dor_cabeca_freq['poor'] | dor_cabeca_intd['poor'], consequent=(dengue['media'], zika['alta'], chikungunya['alta']))
 
+    
     ###############################################
 
     rule_coceira = ctrl.Rule(coceira['average'] | coceira['good'], consequent=(zika['alta'], dengue['baixa'], chikungunya['baixa']))
@@ -221,8 +227,11 @@ def main():
     ###############################################
 
     diag_ctrl = ctrl.ControlSystem([rule1, rule11, rule111, rule2, rule3, rule33, rule333,
-                                    rule_art1, rule_art2, rule_art3,
+                                    rule_manchas1, rule_manchas2, rule_manchas3, rule_manchas4,
+                                    rule_musc1, rule_musc2, rule_musc3, 
+                                    rule_art1, rule_art2, rule_art3, rule_art4, rule_art5, rule_art6,
                                     rule_edema1, rule_edema2, rule_edema3, rule_edema4, rule_edema5,
+                                    rule_cabeca1, rule_cabeca2, rule_cabeca3,
                                     rule_gangli1, rule_gangli2, rule_gangli3,
                                     rule_coceira, rule_coceira2,
                                     rule_hemo, rule_conjuntivite, rule_neuro1])
@@ -234,17 +243,27 @@ def main():
     diag_result.input['febre'] = p1.temp_corpo
     diag_result.input['dias_febre'] = p1.dias_febre
     
+    diag_result.input['mancha'] = p1.mancha
+    diag_result.input['dia_mancha'] = p1.dia_mancha
+
+    diag_result.input['dor_musc_freq'] = p1.dor_musc_freq
+
+    diag_result.input['art_freq'] = p1.dor_art_freq
+    diag_result.input['art_intd'] = p1.dor_art_intensidade 
+
     diag_result.input['edema_art'] = p1.edema_art
     diag_result.input['edema_intd'] = p1.edema_intd
 
+    diag_result.input['conjuntivite'] = p1.conjuntivite
+
+    diag_result.input['dor_cabeca_freq'] = p1.dor_cabeca_freq
+    diag_result.input['dor_cabeca_intd'] = p1.dor_cabeca_intd
 
     diag_result.input['coceira'] = p1.coceira
 
     diag_result.input['ganglionar'] = p1.hiptrof_gangli_freq
 
     diag_result.input['disc_hemo'] = p1.disc_hemo
-
-    diag_result.input['conjuntivite'] = p1.conjuntivite
 
     diag_result.input['acomet_neuro'] = p1.acomet_neuro
 

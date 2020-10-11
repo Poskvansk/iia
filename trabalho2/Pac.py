@@ -6,8 +6,8 @@ class Paciente():
     temp_corpo = 0
     dias_febre = 0
 
-    # manchas = 0
-    mancha_freq = 0
+    mancha = 0
+    dia_mancha = 0
 
     dor_musc_freq = 0
 
@@ -36,14 +36,15 @@ def getStatusPaciente(paciente):
     if paciente.temp_corpo > 38.0:
         paciente.dias_febre = int(input("Por quantos dias observou-se a febre? "))
 
-    # # aux = input("Manchas na pele? (s/n) ")
-    # # if aux[0] == 's': 
-    #     #  paciente.manchas = 1
-    # paciente.manchas_freq = int(input("A partir de quantos dias observou-se as manchas? "))
+    aux = input("Manchas na pele? (s/n) ")
+    if aux[0] == 's': 
+        paciente.mancha = 2
+        paciente.dia_mancha = int(input("A partir de quantos dias observou-se as manchas? "))
 
     paciente.dor_musc_freq = int(input("De 0 a 10, qual a frequencia da dor muscular? "))
     
     paciente.dor_art_freq = int(input("De 0 a 10, qual a frequencia da dor articular? "))
+
     paciente.dor_art_intd = int(input("De 0 a 10, qual a intensidade da dor articular? "))
 
     aux = input("Ocorreu edema da articulação? (s/n) ")
@@ -55,11 +56,10 @@ def getStatusPaciente(paciente):
     if aux[0] == 's': 
         paciente.conjuntivite = 2
 
-    # aux = input("Houve dor de cabeça? (s/n)")
-    # if aux[0] == 's': 
-    #     paciente.dor_cabeca_freq = 1
+    paciente.dor_cabeca_freq = int(input("De 0 a 10, qual a frequencia das dores de cabeça? "))
 
-    #     paciente.dor_cabeca_intd = int(input("De  a 10, qual a intensidade da dor de cabeça? "))
+    if paciente.dor_cabeca_freq != 0:
+        paciente.dor_cabeca_intd = int(input("De  a 10, qual a intensidade das dores de cabeça? "))
 
     paciente.coceira = int(input("De 0 a 10, qual a intensidade da coceira? "))
 
