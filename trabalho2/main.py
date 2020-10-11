@@ -2,8 +2,6 @@ import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 import matplotlib.pyplot as plt
-import matplotlib
-
 
 ###########
 from Pac import *
@@ -152,29 +150,26 @@ def main():
     rule11 = ctrl.Rule(febre['good'] & dias_febre['media'], consequent = (dengue['alta'], zika['baixa'], chikungunya['alta']))
     rule111 = ctrl.Rule(febre['good'] & dias_febre['curta'], consequent = (dengue['baixa'], zika['baixa'], chikungunya['alta']))
 
-    rule2 = ctrl.Rule(febre['poor'], consequent = (dengue['baixa'], zika['alta'], chikungunya['baixa'], saudavel['alta']))
-    # rule2 = ctrl.Rule(febre['poor'] | dias_febre['curta'], consequent = (dengue['baixa'], zika['alta'], chikungunya['baixa'] ))
-    # rule22 = ctrl.Rule(febre['poor'] & dias_febre['media'], consequent = (dengue['baixa'], zika['alta'], chikungunya['baixa']))
-    # rule222 = ctrl.Rule(febre['poor'] & dias_febre['longa'], consequent = (dengue['baixa'], zika['media'], chikungunya['baixa']))
+    rule2 = ctrl.Rule(febre['poor'] | dias_febre['curta'], consequent = (dengue['baixa'], zika['alta'], chikungunya['baixa'] ))
 
     rule3 = ctrl.Rule(febre['average'] & dias_febre['longa'], consequent = (dengue['alta'], zika['media'], chikungunya['baixa']))
     rule33 = ctrl.Rule(febre['average'] & dias_febre['media'], consequent = (dengue['media'], zika['media'], chikungunya['baixa']))
     rule333 = ctrl.Rule(febre['average'] & dias_febre['curta'], consequent = (dengue['baixa'], zika['alta'], chikungunya['baixa']))
     
-    ###############################################
+    # ###############################################
 
     rule_manchas1 = ctrl.Rule(mancha['nao'], zika['baixa'])
     rule_manchas2 = ctrl.Rule(mancha['sim'] | dia_mancha['cedo'], consequent=(dengue['baixa'], zika['alta'], chikungunya['media']))
     rule_manchas3 = ctrl.Rule(mancha['sim'] | dia_mancha['normal'], consequent=(dengue['media'], zika['media'], chikungunya['media']))
     rule_manchas4 = ctrl.Rule(mancha['sim'] | dia_mancha['tarde'], consequent=(dengue['alta'], zika['baixa'], chikungunya['media']))
 
-    ###############################################
+    # ###############################################
 
     rule_musc1 = ctrl.Rule(dor_musc_freq['good'], consequent=(dengue['alta'], zika['media'], chikungunya['baixa']))
     rule_musc2 = ctrl.Rule(dor_musc_freq['average'], consequent=(dengue['media'], zika['alta'], chikungunya['media']))
     rule_musc3 = ctrl.Rule(dor_musc_freq['poor'], consequent=(dengue['baixa'], zika['media'], chikungunya['alta']))
 
-    ###############################################
+    # ###############################################
 
     rule_art1 = ctrl.Rule(dor_art_intensidade['good'], consequent=(dengue['baixa'], zika['baixa'], chikungunya['alta']))
     rule_art2 = ctrl.Rule(dor_art_intensidade['average'], consequent=(dengue['baixa'], zika['alta'], chikungunya['alta']))
@@ -184,7 +179,7 @@ def main():
     rule_art5 = ctrl.Rule(dor_art_freq['average'], consequent=(dengue['baixa'], zika['alta'], chikungunya['baixa']))
     rule_art6 = ctrl.Rule(dor_art_freq['poor'], consequent=(dengue['alta'], zika['media'], chikungunya['baixa']))
 
-    ###############################################
+    # ###############################################
 
     rule_edema1 = ctrl.Rule(edema_art['nao'], consequent=(dengue['alta'], zika['baixa'], chikungunya['baixa']))
     rule_edema2 = ctrl.Rule(edema_art['sim'], consequent=(dengue['baixa'], zika['alta'], chikungunya['alta']))
@@ -193,38 +188,38 @@ def main():
     rule_edema4 = ctrl.Rule(edema_intd['average'], consequent=(zika['alta'], chikungunya['alta']))
     rule_edema5 = ctrl.Rule(edema_intd['poor'], consequent=(zika['alta'], chikungunya['media']))
 
-    ###############################################
+    # ###############################################
 
-    rule_conjuntivite = ctrl.Rule(conjuntivite['sim'], consequent=(zika['alta'], chikungunya['media'], dengue['baixa']))
+    rule_conjuntivite1 = ctrl.Rule(conjuntivite['sim'], consequent=(dengue['baixa'], zika['alta'], chikungunya['media']))
+    # rule_conjuntivite2 = ctrl.Rule(conjuntivite['nao'], consequent=(zika['baixa']))
 
-    ###############################################
+    # ###############################################
 
     rule_cabeca1 = ctrl.Rule(dor_cabeca_freq['good'] & dor_cabeca_intd['good'], consequent=(dengue['alta'], zika['media'], chikungunya['baixa']))
     rule_cabeca2 = ctrl.Rule(dor_cabeca_freq['average'] | dor_cabeca_intd['average'], consequent=(dengue['media'], zika['alta'], chikungunya['alta']))
     rule_cabeca3 = ctrl.Rule(dor_cabeca_freq['poor'] | dor_cabeca_intd['poor'], consequent=(dengue['media'], zika['alta'], chikungunya['alta']))
 
-    
-    ###############################################
+    # ###############################################
 
     rule_coceira = ctrl.Rule(coceira['average'] | coceira['good'], consequent=(zika['alta'], dengue['baixa'], chikungunya['baixa']))
     rule_coceira2 = ctrl.Rule(coceira['poor'], consequent=(zika['baixa'], dengue['alta'], chikungunya['alta']))
 
-    ###############################################
+    # ###############################################
 
     rule_gangli1 = ctrl.Rule(hiptrof_gangli_freq['good'], consequent=(dengue['baixa'], zika['alta'], chikungunya['media']))
     rule_gangli2 = ctrl.Rule(hiptrof_gangli_freq['average'], consequent=(dengue['media'], zika['media'], chikungunya['alta']))
     rule_gangli3 = ctrl.Rule(hiptrof_gangli_freq['poor'], consequent=(dengue['alta'], zika['baixa'], chikungunya['media']))
 
-    ###############################################
+    # ###############################################
 
     rule_hemo = ctrl.Rule(disc_hemo['sim'], consequent=(zika['baixa'], dengue['media'], chikungunya['baixa']))
 
-    ###############################################
+    # ###############################################
 
     rule_neuro1 = ctrl.Rule(acomet_neuro['sim'], consequent=(dengue['baixa'], zika['media'], chikungunya['baixa']))
-    # rule_neuro2 = ctrl.Rule(acomet_neuro['sim'] , consequent=(dengue['baixa'], zika['media'], chikungunya['baixa']))
+    # # rule_neuro2 = ctrl.Rule(acomet_neuro['sim'] , consequent=(dengue['baixa'], zika['media'], chikungunya['baixa']))
 
-    ###############################################
+    # ###############################################
 
     diag_ctrl = ctrl.ControlSystem([rule1, rule11, rule111, rule2, rule3, rule33, rule333,
                                     rule_manchas1, rule_manchas2, rule_manchas3, rule_manchas4,
@@ -234,7 +229,8 @@ def main():
                                     rule_cabeca1, rule_cabeca2, rule_cabeca3,
                                     rule_gangli1, rule_gangli2, rule_gangli3,
                                     rule_coceira, rule_coceira2,
-                                    rule_hemo, rule_conjuntivite, rule_neuro1])
+                                    rule_hemo, rule_conjuntivite1, rule_neuro1])
+
 
     diag_result = ctrl.ControlSystemSimulation(diag_ctrl)
 
@@ -279,5 +275,30 @@ def main():
     # zika.view(sim=diag_result)
     # chikungunya.view(sim=diag_result)
     # input("Enter")
+
+##############################################################################################3
+##############################################################################################3
+##############################################################################################3
+##############################################################################################3
+
+    rule_sintozika = ctrl.Rule(antecedent=(hiptrof_gangli_freq['good'] & dia_mancha['cedo']), consequent=(zika['alta'], dengue['baixa'], chikungunya['baixa']))
+    rule_sintozika2 = ctrl.Rule(hiptrof_gangli_freq['average'], consequent=(zika['media'], dengue['media'], chikungunya['alta']))
+    rule_sintozika3 = ctrl.Rule(hiptrof_gangli_freq['poor'], consequent=(zika['baixa'], dengue['baixa'], chikungunya['baixa']))
+
+    diag_ctrl2 = ctrl.ControlSystem([rule_sintozika ,rule_sintozika2, rule_sintozika3])
+
+    diag_result2 = ctrl.ControlSystemSimulation(diag_ctrl2)
+
+    diag_result2.input['ganglionar'] = p1.hiptrof_gangli_freq
+    diag_result2.input['dia_mancha'] = p1.dia_mancha
+
+    diag_result2.compute()
+
+    print("dengue = ", round(diag_result2.output['dengue'], 2) )
+    print("zika = ", round(diag_result2.output['zika'],2) )
+    print("chico = ", round(diag_result2.output['chikungunya'],2) )
+
+
+
 
 main()

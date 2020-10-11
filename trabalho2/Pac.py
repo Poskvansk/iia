@@ -41,40 +41,42 @@ def getStatusPaciente(paciente):
         paciente.mancha = 2
         paciente.dia_mancha = int(input("A partir de quantos dias observou-se as manchas? "))
 
-    paciente.dor_musc_freq = int(input("De 0 a 10, qual a frequencia da dor muscular? "))
+    # paciente.dor_musc_freq = int(input("De 0 a 10, qual a frequencia da dor muscular? "))
     
-    paciente.dor_art_freq = int(input("De 0 a 10, qual a frequencia da dor articular? "))
 
-    paciente.dor_art_intd = int(input("De 0 a 10, qual a intensidade da dor articular? "))
+    # paciente.dor_art_freq = int(input("De 0 a 10, qual a frequencia da dor articular? "))
+    
+    # if paciente.dor_art_freq != 0:
+    #     paciente.dor_art_intd = int(input("De 0 a 10, qual a intensidade da dor articular? "))
 
-    aux = input("Ocorreu edema da articulação? (s/n) ")
-    if aux[0] == 's': 
-        paciente.edema_art = 2
-        paciente.edema_intd = int(input("De 1 a 10, qual a intensidade do edema? "))
+    # aux = input("Ocorreu edema da articulação? (s/n) ")
+    # if aux[0] == 's': 
+    #     paciente.edema_art = 2
+    #     paciente.edema_intd = int(input("De 1 a 10, qual a intensidade do edema? "))
 
-    aux = input("Houve conjuntivite? (s/n) ")
-    if aux[0] == 's': 
-        paciente.conjuntivite = 2
+    # aux = input("Houve conjuntivite? (s/n) ")
+    # if aux[0] == 's': 
+    #     paciente.conjuntivite = 2
 
-    paciente.dor_cabeca_freq = int(input("De 0 a 10, qual a frequencia das dores de cabeça? "))
+    # paciente.dor_cabeca_freq = int(input("De 0 a 10, qual a frequencia das dores de cabeça? "))
 
-    if paciente.dor_cabeca_freq != 0:
-        paciente.dor_cabeca_intd = int(input("De  a 10, qual a intensidade das dores de cabeça? "))
+    # if paciente.dor_cabeca_freq != 0:
+    #     paciente.dor_cabeca_intd = int(input("De  a 10, qual a intensidade das dores de cabeça? "))
 
     paciente.coceira = int(input("De 0 a 10, qual a intensidade da coceira? "))
 
     paciente.hiptrof_gangli_freq= int(input("De 0 a 10, com que frequencia esta ocorrendo hipertrofia ganglionar? "))
 
-    aux = input("Houve discrasia hemorrágica? (s/n) ")
-    if aux[0] == 's': 
-        paciente.disc_hemo = 2
+    # aux = input("Houve discrasia hemorrágica? (s/n) ")
+    # if aux[0] == 's': 
+    #     paciente.disc_hemo = 2
 
-    aux = input("Houve acometimento neurológico? (s/n) ")
-    if aux[0] == 's': 
-        paciente.acomet_neuro = 2
+    # aux = input("Houve acometimento neurológico? (s/n) ")
+    # if aux[0] == 's': 
+    #     paciente.acomet_neuro = 2
         
-        neo = input("O paciente é neonato? (s/n) ")
-        if neo[0] == 's':
-            paciente.neonato = 2
+    #     neo = input("O paciente é neonato? (s/n) ")
+    #     if neo[0] == 's':
+    #         paciente.neonato = 2
 
     return paciente
