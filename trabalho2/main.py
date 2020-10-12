@@ -43,24 +43,24 @@ def main():
 
     ################################################
     dengue = ctrl.Consequent(np.arange(0, 1.1, 0.1), 'dengue')
-    dengue['baixa'] = fuzz.trimf(dengue.universe, [0, 0, 0.4])
-    dengue['media'] = fuzz.trimf(dengue.universe, [0.3, 0.5, 1.0])
-    dengue['alta'] = fuzz.trimf(dengue.universe, [0.5, 1.0, 1.0])
+    dengue['baixa'] = fuzz.trimf(dengue.universe, [0, 0, 0.3])
+    dengue['media'] = fuzz.trimf(dengue.universe, [0.25, 0.5, 0.75])
+    dengue['alta'] = fuzz.trimf(dengue.universe, [0.7, 1.0, 1.0])
     ################################################
     zika = ctrl.Consequent(np.arange(0, 1.1, 0.1), 'zika')
-    zika['baixa'] = fuzz.trimf(dengue.universe, [0, 0, 0.4])
-    zika['media'] = fuzz.trimf(dengue.universe, [0.3, 0.5, 1.0])
-    zika['alta'] = fuzz.trimf(dengue.universe, [0.5, 1.0, 1.0])
+    zika['baixa'] = fuzz.trimf(dengue.universe, [0, 0, 0.3])
+    zika['media'] = fuzz.trimf(dengue.universe, [0.25, 0.5, 0.75])
+    zika['alta'] = fuzz.trimf(dengue.universe, [0.7, 1.0, 1.0])
     ################################################
     chikungunya = ctrl.Consequent(np.arange(0, 1.1, 0.1), 'chikungunya')
-    chikungunya['baixa'] = fuzz.trimf(dengue.universe, [0, 0, 0.4])
-    chikungunya['media'] = fuzz.trimf(dengue.universe, [0.3, 0.5, 1.0])
-    chikungunya['alta'] = fuzz.trimf(dengue.universe, [0.5, 1.0, 1.0])
+    chikungunya['baixa'] = fuzz.trimf(dengue.universe, [0, 0, 0.3])
+    chikungunya['media'] = fuzz.trimf(dengue.universe, [0.25, 0.5, 0.75])
+    chikungunya['alta'] = fuzz.trimf(dengue.universe, [0.7, 1.0, 1.0])
     ################################################
     saudavel = ctrl.Consequent(np.arange(0, 1.1, 0.1), 'saudavel')
-    saudavel['baixa'] = fuzz.trimf(dengue.universe, [0, 0, 0.4])
-    saudavel['media'] = fuzz.trimf(dengue.universe, [0.3, 0.5, 1.0])
-    saudavel['alta'] = fuzz.trimf(dengue.universe, [0.5, 1.0, 1.0])
+    saudavel['baixa'] = fuzz.trimf(dengue.universe, [0, 0, 0.3])
+    saudavel['media'] = fuzz.trimf(dengue.universe, [0.25, 0.5, 0.75])
+    saudavel['alta'] = fuzz.trimf(dengue.universe, [0.7, 1.0, 1.0])
     ###############################################
 
     febre['baixa'] = fuzz.trimf(febre.universe, [36, 36, 38.5])
@@ -159,7 +159,7 @@ def main():
     rule_gangli = ctrl.Rule(~hiptrf_gangli['good'], consequent=(zika['baixa']))
     rule_gangli2 = ctrl.Rule(~hiptrf_gangli['poor'], saudavel['baixa'])
  
-    rule_febre1 = ctrl.Rule(febre['baixa'], consequent=(dengue['baixa'], zika['alta']%0.2, chikungunya['baixa'], saudavel['alta']%0.5))
+    rule_febre1 = ctrl.Rule(febre['baixa'], consequent=(dengue['baixa'], zika['alta']%0.5, chikungunya['baixa'], saudavel['alta']%0.5))
     rule_febre2 = ctrl.Rule(febre['alta'] & dias_febre['longa'], consequent=(dengue['alta'], zika['baixa'], chikungunya['media']%.5, saudavel['baixa']))
     rule_febre3 = ctrl.Rule(febre['alta'] & dias_febre['curta'], consequent=(dengue['media'], zika['baixa'], chikungunya['alta'], saudavel['baixa']))
 
@@ -192,7 +192,6 @@ def main():
                                      rule_art1, rule_art2, rule_art3,
                                      rule_conjt, rule_no_conjt, rule_acmt_nr])
 
-    # zika.view(sim=diag_result)
     diag_result = ctrl.ControlSystemSimulation(diag_ctrl)
 
     diag_result.input['febre'] = p1.temp_corpo
@@ -225,11 +224,16 @@ def main():
 
     diag_result.compute()
 
-    print("=============================================================")
-    print("dengue = ", round(diag_result.output['dengue'], 2) )
-    print("zika = ", round(diag_result.output['zika'],2) )
-    print("chico = ", round(diag_result.output['chikungunya'],2) )
-    print("saud. = ", round(diag_result.output['saudavel'],2) )
-    print("=============================================================")
+    output = []
+    output.append(('dengue',round(diag_result.output['dengue'],2)))
+    output.append(('zika',round(diag_result.output['zika'],2)))
+    output.append(('chikungunya',round(diag_result.output['chikungunya'],2)))
+    output.append(('saudavel',round(diag_result.output['saudavel'],2)))
+    output = sorted(output, key=lambda tup: tup[1], reverse=True )
 
+    for i in range(len(output)):
+        if i == 0:
+            print("Seu estado de saúde é, provavelmente: ", output[i])
+        else:
+            print(output[i])
 main()
