@@ -10,8 +10,9 @@ class Paciente():
     dia_mancha = 0
 
     dor_musc = 0
+    dor_musc_intd = 0
 
-    dor_art_freq = 0
+    dor_art = 0
     dor_art_intensidade = 0
 
     edema_art = 0
@@ -24,7 +25,7 @@ class Paciente():
 
     coceira = 0
 
-    hiptrof_gangli_freq = 0
+    hiptrf_gangli = 0
     disc_hemo = 0
     acomet_neuro = 0
 
@@ -41,11 +42,15 @@ def getStatusPaciente(paciente):
         paciente.mancha = 2
         paciente.dia_mancha = int(input("A partir de quantos dias observou-se as manchas? "))
 
-    paciente.dor_musc = int(input("De 0 a 10, qual a intensidade da dor muscular? "))
+
+    aux = input("Sentindo dor muscular? (s/n) ")
+    if aux[0] == 's': 
+        paciente.dor_musc = 2
+        paciente.dor_musc_intd = int(input("De 1 a 10, qual a intensidade da dor muscular? "))
     
-    paciente.dor_art_freq = int(input("De 0 a 10, qual a frequencia da dor articular? "))
-    
-    if paciente.dor_art_freq != 0:
+    aux = input("Sentindo dor articular? (s/n) ")
+    if aux[0] == 's': 
+        paciente.dor_art = 2
         paciente.dor_art_intensidade = int(input("De 0 a 10, qual a intensidade da dor articular? "))
 
     aux = input("Ocorreu edema da articulação? (s/n) ")
@@ -58,13 +63,13 @@ def getStatusPaciente(paciente):
         paciente.conjuntivite = 2
 
     paciente.dor_cabeca_freq = int(input("De 0 a 10, qual a frequencia das dores de cabeça? "))
-
-    # if paciente.dor_cabeca_freq != 0:
-    paciente.dor_cabeca_intd = int(input("De  a 10, qual a intensidade das dores de cabeça? "))
+    
+    if paciente.dor_cabeca_freq != 0:
+        paciente.dor_cabeca_intd = int(input("De 0 a 10, qual a intensidade das dores de cabeça? "))
 
     paciente.coceira = int(input("De 0 a 10, qual a intensidade da coceira? "))
 
-    paciente.hiptrof_gangli_freq= int(input("De 0 a 10, com que frequencia esta ocorrendo hipertrofia ganglionar? "))
+    paciente.hiptrf_gangli= int(input("De 0 a 10, com que frequencia esta ocorrendo hipertrofia ganglionar? "))
 
     aux = input("Houve discrasia hemorrágica? (s/n) ")
     if aux[0] == 's': 
@@ -80,8 +85,6 @@ def getStatusPaciente(paciente):
 
     return paciente
 
-
-
        
-    # rule_sintozika2 = ctrl.Rule(hiptrof_gangli_freq['average'], consequent=(zika['media'], dengue['media'], chikungunya['alta']%.5 ))
-    # rule_sintozika3 = ctrl.Rule(hiptrof_gangli_freq['poor'], consequent=(zika['baixa'], dengue['baixa'], chikungunya['baixa']))
+    # rule_sintozika2 = ctrl.Rule(hiptrf_gangli['average'], consequent=(zika['media'], dengue['media'], chikungunya['alta']%.5 ))
+    # rule_sintozika3 = ctrl.Rule(hiptrf_gangli['poor'], consequent=(zika['baixa'], dengue['baixa'], chikungunya['baixa']))
