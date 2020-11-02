@@ -102,6 +102,8 @@ def main():
 
     edema_art['nao'] = fuzz.trimf(edema_art.universe, [0,0,1])
     edema_art['sim'] = fuzz.trimf(edema_art.universe, [1,2,2])
+    edema_art.view()
+    input()
 
     edema_intd.automf(3)
 
