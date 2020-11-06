@@ -49,3 +49,34 @@ def main():
     print(accuracy_score(y_test, y_pred))
 
 main()
+
+
+
+    # for i in columns:
+    #     df_datatypes = dataframe[i].dtypes
+    #     if df_datatypes == 'object':
+
+    #         # print(i)
+    #         for j in dataframe[i]:
+    #             if isinstance(j, str):
+    #                 if j.find('<') != -1:
+    #                     print(i, j)
+
+    
+    # for i in dataframe[mix_columns[0]]:
+    #     if isinstance(i, int):
+    #         print(i, type(i))
+    # for i in dataframe[mix_columns[0]]:
+    #     print(i, type(i))
+
+    # print(dataframe[mix_columns].dtypes)
+    # print(mix_columns)
+
+    # print("X_train shape: ", X_train.shape)
+    # print("=====================")
+    # print("X_test shape: ", X_test.shape)
+    # print("=====================")
+    # print("y_train shape: ", y_train.shape)
+    # print("=====================")
+    # print("y_testshape: ", y_test.shape)
+    # print("=====================")
