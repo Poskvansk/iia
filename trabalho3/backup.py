@@ -80,3 +80,46 @@ main()
     # print("=====================")
     # print("y_testshape: ", y_test.shape)
     # print("=====================")
+
+
+
+
+
+
+##################################### MAIN FINAL
+
+
+    # X = dataframe.drop(["SARS-Cov-2 exam result"], axis=1)
+    # y = dataframe["SARS-Cov-2 exam result"]
+
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+    # sc = StandardScaler()
+    # X_train = sc.fit_transform(X_train)
+    # X_test = sc.fit_transform(X_test)
+
+    # classifier = RandomForestClassifier(n_estimators=100, random_state=0)
+    # classifier.fit(X_train, y_train)
+    # y_pred = classifier.predict(X_test)
+
+    # important_features = classifier.feature_importances_
+    # indexes = np.argsort(important_features)[::-1]
+    # top10 = []
+    # for i in range(10):
+    #     top10.append(X.columns.tolist()[indexes[i]])
+    
+    # # print("ranking: ")
+    # # for i in range(10):
+    # #     print("{} feature {} importance {}".format(i+1, top10[i], round(important_features[indexes[i]], 2) ) )
+    # neg = 0
+    # pos = 0
+    # for i in y_pred:
+    #     if i == 0.0:
+    #         neg += 1
+    #     if i == 1.0:
+    #         pos += 1
+    # # print("n = {}, p = {}".format(neg, pos))
+    # # print(confusion_matrix(y_test, y_pred))
+    # # print(classification_report(y_test, y_pred))
+    # # print(accuracy_score(y_test, y_pred))
+    # print("=====================================")
