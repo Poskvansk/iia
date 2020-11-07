@@ -58,9 +58,9 @@ def fix_dataframe_values(dataframe):
         if not isinstance(i, float):
             dataframe['Urine - pH'] = dataframe['Urine - pH'].replace([i], float(i))
 
-    for i in dataframe[mix_columns[0]]:
-        if not isinstance(i, float):
-            print(i, type(i))
+    # for i in dataframe[mix_columns[0]]:
+    #     if not isinstance(i, float):
+    #         print(i, type(i))
 
     return dataframe
 

@@ -12,13 +12,14 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 
 from dataframe import *
 from quest2 import *
+from quest22 import *
 
 def main():
 
     dataframe = pd.read_excel("data/dataset.xlsx")
     dataframe = fix_dataframe(dataframe)
 
-    classif(dataframe, "SARS-Cov-2 exam result")
-    quest2(dataframe)
+    # classif(dataframe, "SARS-Cov-2 exam result")
+    quest22(dataframe)
 
 main()

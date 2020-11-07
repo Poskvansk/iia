@@ -123,3 +123,22 @@ main()
     # # print(classification_report(y_test, y_pred))
     # # print(accuracy_score(y_test, y_pred))
     # print("=====================================")
+
+
+
+
+
+    #new column
+    # aux = 1
+    # for i in dataframe["Patient positive and stayed home (1=yes, 0=no)"]:
+    #     print(aux, " => ", i)
+    #     aux += 1
+
+    # print(dataframe["Patient positive and stayed home (1=yes, 0=no)"])
+
+    # print(dataframe["SARS-Cov-2 exam result"])
+    # for i in aux:
+    #     print(i)
+
+    # print(aux)
+    # dataframe['Patient stayed home'] 
