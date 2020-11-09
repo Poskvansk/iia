@@ -51,6 +51,8 @@ def fix_dataframe_values(dataframe):
     dataframe = dataframe.replace(np.NaN, '')
 
     # replaces específicos para alguns elementos problematicos dessas colunas
+    dataframe['SARS-Cov-2 exam result'] = dataframe['SARS-Cov-2 exam result'].replace(['negative'], '0')
+    dataframe['SARS-Cov-2 exam result'] = dataframe['SARS-Cov-2 exam result'].replace(['positive'], '1')
     dataframe['Urine - Leukocytes'] = dataframe['Urine - Leukocytes'].replace(['<1000'], '900')
     dataframe['Urine - pH'] = dataframe['Urine - pH'].replace(['Não Realizado'], 0.0)
     dataframe['Urine - pH'] = dataframe['Urine - pH'].replace([''], 0.0)
