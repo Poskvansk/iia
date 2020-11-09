@@ -12,18 +12,27 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 
 from dataframe import *
 
+# Função que printa as 10 caracterisitcas mais importantes para a Floresta.
 def important_features(classifier, X):
     
     important_features = classifier.feature_importances_
     indexes = np.argsort(important_features)[::-1]
     top10 = []
+    aux = 1
 
     for i in range(10):
         top10.append(X.columns.tolist()[indexes[i]])
+
+    print("================================")
+    print("Most important features:")
     for i in top10:
-        print(i)
+        print(aux, " - ", i)
+        aux += 1
     print("================================")
 
+# Esta funcao cria uma Random Forest
+# dataframe = conjunto de dados utilizados para a floresta (tabela)
+# column = coluna que a Floresta pretende prever (o resultado)
 def classif(dataframe, column):
 
     print("Random forest var: ", column)
@@ -37,38 +46,35 @@ def classif(dataframe, column):
     X_train = sc.fit_transform(X_train)
     X_test = sc.fit_transform(X_test)
 
-    classifier = RandomForestClassifier(n_estimators=100, random_state=0)
+    classifier = RandomForestClassifier(n_estimators=300, random_state=0)
     classifier.fit(X_train, y_train)
     y_pred = classifier.predict(X_test)
 
-    # important_features(classifier, X)
+    print(classification_report(y_test, y_pred))
+    # print(accuracy_score(y_test, y_pred))
 
+    important_features(classifier, X)
+
+# Esta função cria uma nova coluna ["Patient destination"], especifica para poder tentar prever o local de acompanhamento de um paciente
+def create_new_column(dataframe):
+  
+    dataframe["Patient addmited to regular ward (1=yes, 0=no)"] = dataframe["Patient addmited to regular ward (1=yes, 0=no)"].replace(1, 1)
+
+    dataframe["Patient addmited to semi-intensive unit (1=yes, 0=no)"] = dataframe["Patient addmited to semi-intensive unit (1=yes, 0=no)"].replace(1, 2)
+
+    dataframe["Patient addmited to intensive care unit (1=yes, 0=no)"] = dataframe["Patient addmited to intensive care unit (1=yes, 0=no)"].replace(1, 3)
+    
+    dataframe["Patient destination"] = dataframe["Patient addmited to regular ward (1=yes, 0=no)"] + dataframe["Patient addmited to semi-intensive unit (1=yes, 0=no)"] + dataframe["Patient addmited to intensive care unit (1=yes, 0=no)"]
+
+    return dataframe
+
+# Apenas para separar a questão 1 da questão 2 do trabalho
 def quest2(dataframe):
 
-    classif(dataframe, "Patient addmited to regular ward (1=yes, 0=no)")
-    classif(dataframe, "Patient addmited to semi-intensive unit (1=yes, 0=no)")
-    classif(dataframe, "Patient addmited to intensive care unit (1=yes, 0=no)")
+    dat2 = create_new_column(dataframe)
 
-    dataframe["Patient positive and stayed home (1=yes, 0=no)"] = dataframe["SARS-Cov-2 exam result"] + dataframe["Patient addmited to regular ward (1=yes, 0=no)"] + dataframe["Patient addmited to semi-intensive unit (1=yes, 0=no)"] + dataframe["Patient addmited to intensive care unit (1=yes, 0=no)"]
-    dataframe["Patient positive and stayed home (1=yes, 0=no)"] = dataframe["Patient positive and stayed home (1=yes, 0=no)"].replace(0.0, 0)
-    dataframe["Patient positive and stayed home (1=yes, 0=no)"] = dataframe["Patient positive and stayed home (1=yes, 0=no)"].replace(1.0, 0)
-    dataframe["Patient positive and stayed home (1=yes, 0=no)"] = dataframe["Patient positive and stayed home (1=yes, 0=no)"].replace(2.0, 1)
-    classif(dataframe, "Patient positive and stayed home (1=yes, 0=no)")
+    dat2 = dat2.drop(["Patient addmited to regular ward (1=yes, 0=no)"], axis=1)
+    dat2 = dat2.drop(["Patient addmited to semi-intensive unit (1=yes, 0=no)"], axis=1)
+    dat2 = dat2.drop(["Patient addmited to intensive care unit (1=yes, 0=no)"], axis=1)
 
-    # aux = 1
-    # for i in dataframe["Patient positive and stayed home (1=yes, 0=no)"]:
-    #     print(aux, " => ", i)
-    #     aux += 1
-
-    print(dataframe["SARS-Cov-2 exam result"])
-    print(dataframe["Patient addmited to regular ward (1=yes, 0=no)"])
-    print(dataframe["Patient addmited to semi-intensive unit (1=yes, 0=no)"])
-    print(dataframe["Patient addmited to intensive care unit (1=yes, 0=no)"])
-    print(dataframe["Patient positive and stayed home (1=yes, 0=no)"])
-
-    # print(dataframe["SARS-Cov-2 exam result"])
-    # for i in aux:
-    #     print(i)
-
-    # print(aux)
-    # dataframe['Patient stayed home'] 
+    classif(dat2, "Patient destination")
